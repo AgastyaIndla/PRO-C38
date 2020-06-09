@@ -1,18 +1,52 @@
 class Player {
-    constructor(x,y,width,height){
-      this.index = null ;
-      this.name = null ;
-      this.distance = 0 ;
-      this.body = Bodies.rectangle(x,y,width,height);
-      this.width = width;
-      this.height = height;
-      World.add(world, this.body);
-  
-    }
-        display(){
-            var pos = this.body.position;
-            rectMode(CENTER);
-            fill(255);
-            rect(pos.x, pos.y,20,50);
-        }
+  constructor(){
+    this.index = null ;
+    this.name = null ;
+    this.distance = 0 ;
+    this.rank=null;
+
+  }
+
+  getCount(){
+    var playerCountRef = database.ref('playerCount');
+    playerCountRef.on("value",function(data){
+      playerCount = data.val();
+    })
+  }
+
+
+
+  updateCount(count){
+    database.ref('/').update({
+      playerCount: count
+    });
+  }
+
+  update(){
+    var playerIndex = "players/player" + this.index ;
+    database.ref(playerIndex).set({
+      name:this.name ,
+      distance : this.distance 
+    });
+  }
+
+ static getPlayerInfo(){
+    var playerInfoRef = database.ref('players');
+    playerInfoRef.on("value",(data) =>{
+      allPlayers = data.val();
+
+    })
+  }
+
+  getplayersAtEnd(){
+    database.ref('playersAtEnd').on("value", (data) => {
+      this.rank = data.val();
+    })
+  }
+
+ static updateplayersAtEnd(rank){
+   database.ref('/').update({
+     playersAtEnd: rank 
+   });
+ }
 }

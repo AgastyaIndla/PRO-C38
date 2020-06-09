@@ -1,7 +1,7 @@
 class Obstacle {
     constructor(x, y, width, height){
         options = {
-            isStatic = true
+            isStatic
         }
         this.body = Bodies.rectangle(x,y,width,height);
         this.width = width;

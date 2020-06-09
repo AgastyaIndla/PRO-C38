@@ -3,44 +3,37 @@ const World= Matter.World;
 const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
-var engine,world;
-var canvas;
-var track1;
+var canvas, backgroundImage;
 
-function setup() {
-  canvas = createCanvas(1536,610);
+var gameState = 0;
+var playerCount;
+var allPlayers ;
+var distance = 0;
+var database;
 
-  engine = Engine.create();
-  world = engine.world;
+var form, player, game;
+var players,player1,player2,player3,player4;
 
- track1 = new Track(768,150);
- track2 = new Track(768,300);
- track3 = new Track(768,450);
- track4 = new Track(768,600);
-
- player1 = new Player(120,120);
- player2 = new Player(120,270);
- player3 = new Player(120,420);
- player4 = new Player(120,570);
+function setup(){
+  canvas = createCanvas(displayWidth-180,displayHeight-50);
+  database = firebase.database();
+  game = new Game();
+  game.getState();
+  game.start();
 }
 
-function draw() {
 
+function draw(){
+
+  
   text("x:"+mouseX,50,50); 
   text("y:"+mouseY,50,70);
-
-  background(0,100); 
   
-  track1.display();
-  track2.display();
-  track3.display();
-  track4.display();
-
-  player1.display();
-  player2.display();
-  player3.display();
-  player4.display();
-
-
-  //drawSprites();
+  if(playerCount===4){
+    game.update(1);
+  }
+  if(gameState===1){
+    clear();
+    game.play();
+  }
 }
