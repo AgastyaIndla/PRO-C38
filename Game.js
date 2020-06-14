@@ -94,7 +94,6 @@ class Game {
        player.rank ++
        Player.updateplayersAtEnd(player.rank);
      }
-      drawSprites();
     }
   
       end(){
